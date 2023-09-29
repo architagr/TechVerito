@@ -9,6 +9,12 @@ type ISalesService interface {
 	GetTotalSalesReport() models.TotalSalesResponse
 }
 
+func InitSalesService(ticketRepo persistance.ITicketPersistance) ISalesService {
+	return &SalesService{
+		ticketRepo: ticketRepo,
+	}
+}
+
 type SalesService struct {
 	ticketRepo persistance.ITicketPersistance
 }

@@ -8,7 +8,22 @@ import (
 )
 
 type IShowService interface {
-	GetAllShow() (*models.ShowResponse, error)
+	GetAllShow() (result []models.ShowResponse, err error)
+}
+
+func InitShowService(showRepo persistance.IShowPersistance,
+	theaterRepo persistance.IThearterPersistance,
+	audiRepo persistance.IAudiPersistance,
+	movieRepo persistance.IMoviePersistance,
+	showSeatService IShowSeatService) IShowService {
+	return &ShowService{
+		showRepo:        showRepo,
+		theaterRepo:     theaterRepo,
+		audiRepo:        audiRepo,
+		movieRepo:       movieRepo,
+		showSeatService: showSeatService,
+	}
+
 }
 
 type ShowService struct {
