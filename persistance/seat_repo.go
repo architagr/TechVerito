@@ -7,6 +7,7 @@ import (
 
 type ISeatPersistance interface {
 	GetSeats(audiId models.AudiIdModel) (seats []models.SeatModel, err error)
+	GetSeatByName(audiId models.AudiIdModel, name string) (seat models.SeatModel, err error)
 }
 
 type SeatPersistance struct {
@@ -25,6 +26,21 @@ func (repo *SeatPersistance) GetSeats(audiId models.AudiIdModel) (seats []models
 		err = &errors.SeatsNotFoundError{
 			Id: audiId,
 		}
+	}
+	return
+}
+
+func (repo *SeatPersistance) GetSeatByName(audiId models.AudiIdModel, name string) (result models.SeatModel, err error) {
+
+	for _, seat := range repo.seats {
+		if seat.AudiId == audiId && seat.Name == name {
+			result = seat
+			break
+		}
+	}
+	err = &errors.SeatsByNameNotFoundError{
+		AudiId: audiId,
+		Name:   name,
 	}
 	return
 }

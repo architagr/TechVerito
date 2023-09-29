@@ -5,8 +5,9 @@ import (
 	"time"
 )
 
+type TicketIdModels int
 type TicketModel struct {
-	Id            int                    `json:"id"`
+	Id            TicketIdModels         `json:"id"`
 	Charges       AmountModel            `json:"charges"`
 	ShowId        ShowIdModel            `json:"showId"`
 	SeatIds       []SeatIdModel          `json:"seatIds"`
