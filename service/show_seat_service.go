@@ -8,13 +8,13 @@ import (
 	"movie_booking/persistance"
 )
 
-type SeatInfo struct {
+type SeatPriceDetails struct {
 	name string
 	rate float32
 }
 type IShowSeatService interface {
-	GetAvailableSeats(showId models.ShowIdModel) (*models.ShowSeatResponse, error)
-	CheckAvailability(showId models.ShowIdModel, seatName []string) ([]models.SeatResponse, error)
+	GetAvailableSeats(showId models.ShowIdModel) ([][]models.SeatInfo, error)
+	CheckAvailability(showId models.ShowIdModel, seatName []string) ([]models.SeatInfo, error)
 }
 
 type showSeatService struct {
@@ -38,7 +38,7 @@ func InitShowSeatService(showRepo persistance.IShowPersistance,
 		seatRepo:         seatRepo,
 	}
 }
-func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) (*models.ShowSeatResponse, error) {
+func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) ([][]models.SeatInfo, error) {
 
 	show, err := svc.showRepo.GetShow(showId)
 	if err != nil {
@@ -59,13 +59,13 @@ func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) (*model
 		return nil, err
 	}
 
-	seatTypes := make(map[models.SeatTypeIdModel]SeatInfo)
+	seatTypes := make(map[models.SeatTypeIdModel]SeatPriceDetails)
 	for _, showSeatType := range showSeatsTypes {
 		seatsType, err := svc.seatTypeRepo.GetSeatType(showSeatType.SeatTypeId)
 		if err != nil {
 			return nil, err
 		}
-		seatTypes[showSeatType.SeatTypeId] = SeatInfo{
+		seatTypes[showSeatType.SeatTypeId] = SeatPriceDetails{
 			name: seatsType.Name,
 			rate: showSeatType.Rate,
 		}
@@ -75,7 +75,7 @@ func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) (*model
 	for _, seat := range audiSeats {
 
 		seatInfo := seatTypes[seat.SeatTypeId]
-		seatData := models.SeatResponse{
+		seatData := models.SeatInfo{
 			Name:         seat.Name,
 			SeatTypeName: seatInfo.name,
 			SeatId:       seat.Id,
@@ -84,12 +84,10 @@ func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) (*model
 		}
 		seatStatusResponse[seat.Row][seat.Col] = seatData
 	}
-	return &models.ShowSeatResponse{
-		Seats: seatStatusResponse,
-	}, nil
+	return seatStatusResponse, nil
 }
 
-func (svc *showSeatService) CheckAvailability(showId models.ShowIdModel, seatNames []string) (result []models.SeatResponse, err error) {
+func (svc *showSeatService) CheckAvailability(showId models.ShowIdModel, seatNames []string) (result []models.SeatInfo, err error) {
 	errorSeat := make([]string, 0, len(seatNames))
 	seatNameMap := make(map[string]bool)
 	for _, name := range seatNames {
@@ -99,9 +97,9 @@ func (svc *showSeatService) CheckAvailability(showId models.ShowIdModel, seatNam
 	if err != nil {
 		return
 	}
-	result = make([]models.SeatResponse, 0, len(seatNames))
+	result = make([]models.SeatInfo, 0, len(seatNames))
 
-	for _, row := range availableSeats.Seats {
+	for _, row := range availableSeats {
 		for _, seat := range row {
 			if seatNameMap[seat.Name] && seat.Status != enums.SEAT_STATUS_AVAILABLE {
 				errorSeat = append(errorSeat, seat.Name)
@@ -129,10 +127,10 @@ func (svc *showSeatService) getShowSeats(showId models.ShowIdModel) (map[models.
 	}
 	return showSeatStatus, nil
 }
-func (svc *showSeatService) getBlankLayout() [][]models.SeatResponse {
-	seatStatusResponse := make([][]models.SeatResponse, constants.SEAT_LAYOUT_MAX_SIZE)
+func (svc *showSeatService) getBlankLayout() [][]models.SeatInfo {
+	seatStatusResponse := make([][]models.SeatInfo, constants.SEAT_LAYOUT_MAX_SIZE)
 	for i := 0; i < constants.SEAT_LAYOUT_MAX_SIZE; i++ {
-		seatStatusResponse[i] = make([]models.SeatResponse, constants.SEAT_LAYOUT_MAX_SIZE)
+		seatStatusResponse[i] = make([]models.SeatInfo, constants.SEAT_LAYOUT_MAX_SIZE)
 	}
 	return seatStatusResponse
 }

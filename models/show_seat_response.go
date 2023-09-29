@@ -2,7 +2,7 @@ package models
 
 import "movie_booking/enums"
 
-type SeatResponse struct {
+type SeatInfo struct {
 	Name         string               `json:"seatName"`
 	SeatTypeName string               `json:"seatTypeName"`
 	SeatId       SeatIdModel          `json:"-"`
@@ -10,5 +10,5 @@ type SeatResponse struct {
 	Status       enums.SeatStatusEnum `json:"status"`
 }
 type ShowSeatResponse struct {
-	Seats [][]SeatResponse `json:"seats"`
+	Seats [][]SeatInfo `json:"seats"`
 }
