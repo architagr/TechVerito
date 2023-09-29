@@ -12,11 +12,11 @@ type IShowPersistance interface {
 	GetShow(id models.ShowIdModel) (models.ShowModel, error)
 }
 
-type ShowPersistance struct {
+type showPersistance struct {
 	shows []models.ShowModel
 }
 
-func (repo *ShowPersistance) GetAllShows(startDate time.Time) (result []models.ShowModel, err error) {
+func (repo *showPersistance) GetAllShows(startDate time.Time) (result []models.ShowModel, err error) {
 	result = make([]models.ShowModel, 0, len(repo.shows))
 
 	for _, show := range repo.shows {
@@ -33,7 +33,7 @@ func (repo *ShowPersistance) GetAllShows(startDate time.Time) (result []models.S
 	}
 	return
 }
-func (repo *ShowPersistance) GetShow(id models.ShowIdModel) (models.ShowModel, error) {
+func (repo *showPersistance) GetShow(id models.ShowIdModel) (models.ShowModel, error) {
 
 	for _, show := range repo.shows {
 		if show.Id == id {
@@ -48,7 +48,7 @@ func (repo *ShowPersistance) GetShow(id models.ShowIdModel) (models.ShowModel, e
 func InitShow() IShowPersistance {
 	now := time.Now()
 
-	return &ShowPersistance{
+	return &showPersistance{
 		// #region data
 		shows: []models.ShowModel{
 			{

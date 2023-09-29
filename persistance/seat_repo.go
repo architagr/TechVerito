@@ -10,11 +10,11 @@ type ISeatPersistance interface {
 	GetSeatByName(audiId models.AudiIdModel, name string) (seat models.SeatModel, err error)
 }
 
-type SeatPersistance struct {
+type seatPersistance struct {
 	seats []models.SeatModel
 }
 
-func (repo *SeatPersistance) GetSeats(audiId models.AudiIdModel) (seats []models.SeatModel, err error) {
+func (repo *seatPersistance) GetSeats(audiId models.AudiIdModel) (seats []models.SeatModel, err error) {
 	result := make([]models.SeatModel, 0, len(repo.seats))
 
 	for _, seat := range repo.seats {
@@ -30,7 +30,7 @@ func (repo *SeatPersistance) GetSeats(audiId models.AudiIdModel) (seats []models
 	return
 }
 
-func (repo *SeatPersistance) GetSeatByName(audiId models.AudiIdModel, name string) (result models.SeatModel, err error) {
+func (repo *seatPersistance) GetSeatByName(audiId models.AudiIdModel, name string) (result models.SeatModel, err error) {
 
 	for _, seat := range repo.seats {
 		if seat.AudiId == audiId && seat.Name == name {
@@ -46,7 +46,7 @@ func (repo *SeatPersistance) GetSeatByName(audiId models.AudiIdModel, name strin
 }
 
 func InitSeats() ISeatPersistance {
-	return &SeatPersistance{
+	return &seatPersistance{
 		seats: []models.SeatModel{
 			// #region Audi 1 row 1
 			{

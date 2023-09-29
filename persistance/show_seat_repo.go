@@ -11,11 +11,11 @@ type IShowSeatPersistance interface {
 	UpdateShowSeatStatus(showId models.ShowIdModel, seatId models.SeatIdModel, status enums.SeatStatusEnum) error
 }
 
-type ShowSeatPersistance struct {
+type showSeatPersistance struct {
 	showSeats []models.ShowSeatModel
 }
 
-func (repo *ShowSeatPersistance) GetShowSeat(showId models.ShowIdModel) (result []models.ShowSeatModel, err error) {
+func (repo *showSeatPersistance) GetShowSeat(showId models.ShowIdModel) (result []models.ShowSeatModel, err error) {
 	result = make([]models.ShowSeatModel, 0, len(repo.showSeats))
 
 	for _, showSeat := range repo.showSeats {
@@ -30,7 +30,7 @@ func (repo *ShowSeatPersistance) GetShowSeat(showId models.ShowIdModel) (result 
 	}
 	return
 }
-func (repo *ShowSeatPersistance) UpdateShowSeatStatus(showId models.ShowIdModel, seatId models.SeatIdModel, status enums.SeatStatusEnum) error {
+func (repo *showSeatPersistance) UpdateShowSeatStatus(showId models.ShowIdModel, seatId models.SeatIdModel, status enums.SeatStatusEnum) error {
 
 	seatFound := false
 	for _, showSeat := range repo.showSeats {
@@ -63,7 +63,7 @@ func InitShowSeatPersistance() IShowSeatPersistance {
 			i++
 		}
 	}
-	return &ShowSeatPersistance{
+	return &showSeatPersistance{
 		showSeats: data,
 	}
 }

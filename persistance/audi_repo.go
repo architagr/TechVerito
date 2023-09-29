@@ -11,12 +11,12 @@ type IAudiPersistance interface {
 	GetAudi(audiId models.AudiIdModel) (models.AudiModel, error)
 }
 
-type AudiPersistance struct {
+type audiPersistance struct {
 	audies []models.AudiModel
 }
 
 func InitAudiPersistance() IAudiPersistance {
-	return &AudiPersistance{
+	return &audiPersistance{
 		// #region this is inilization of database data if we have db connected then this will not be needed
 		audies: []models.AudiModel{
 			{
@@ -62,7 +62,7 @@ func InitAudiPersistance() IAudiPersistance {
 	}
 }
 
-func (repo *AudiPersistance) GetAllAudi(theaterId models.TheaterIdModel) (result []models.AudiModel, err error) {
+func (repo *audiPersistance) GetAllAudi(theaterId models.TheaterIdModel) (result []models.AudiModel, err error) {
 	result = make([]models.AudiModel, 0, len(repo.audies))
 
 	for _, audi := range repo.audies {
@@ -77,7 +77,7 @@ func (repo *AudiPersistance) GetAllAudi(theaterId models.TheaterIdModel) (result
 	}
 	return
 }
-func (repo *AudiPersistance) GetAudi(audiId models.AudiIdModel) (models.AudiModel, error) {
+func (repo *audiPersistance) GetAudi(audiId models.AudiIdModel) (models.AudiModel, error) {
 	for _, audi := range repo.audies {
 		if audi.Id == audiId {
 			return audi, nil

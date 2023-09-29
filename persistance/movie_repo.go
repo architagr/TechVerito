@@ -12,14 +12,14 @@ type IMoviePersistance interface {
 	GetAllMoviesByLanguage(lang enums.LanguageEnum) ([]models.MovieModel, error)
 }
 
-type MoviePersistance struct {
+type moviePersistance struct {
 	movies []models.MovieModel
 }
 
-func (repo *MoviePersistance) GetAllMovies() []models.MovieModel {
+func (repo *moviePersistance) GetAllMovies() []models.MovieModel {
 	return repo.movies
 }
-func (repo *MoviePersistance) GetMovie(id models.MovieIdModel) (models.MovieModel, error) {
+func (repo *moviePersistance) GetMovie(id models.MovieIdModel) (models.MovieModel, error) {
 
 	for _, movie := range repo.movies {
 		if movie.Id == id {
@@ -30,7 +30,7 @@ func (repo *MoviePersistance) GetMovie(id models.MovieIdModel) (models.MovieMode
 		Id: id,
 	}
 }
-func (repo *MoviePersistance) GetAllMoviesByLanguage(lang enums.LanguageEnum) (movies []models.MovieModel, err error) {
+func (repo *moviePersistance) GetAllMoviesByLanguage(lang enums.LanguageEnum) (movies []models.MovieModel, err error) {
 	movies = make([]models.MovieModel, 0, len(repo.movies))
 	for _, movie := range repo.movies {
 		if Contains(movie.Languages, lang) {
@@ -57,7 +57,7 @@ func Contains(list []enums.LanguageEnum, val enums.LanguageEnum) (ok bool) {
 }
 
 func InitMoviePersistance() IMoviePersistance {
-	return &MoviePersistance{
+	return &moviePersistance{
 		movies: []models.MovieModel{
 			{
 				Id:   models.MovieIdModel(1),

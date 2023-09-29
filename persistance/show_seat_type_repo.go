@@ -9,11 +9,11 @@ type IShowSeatTypePersistance interface {
 	GetShowSeatType(showId models.ShowIdModel) (result []models.ShowSeatTypeModel, err error)
 }
 
-type ShowSeatTypePersistance struct {
+type showSeatTypePersistance struct {
 	showSeatTypes []models.ShowSeatTypeModel
 }
 
-func (repo *ShowSeatTypePersistance) GetShowSeatType(showId models.ShowIdModel) (result []models.ShowSeatTypeModel, err error) {
+func (repo *showSeatTypePersistance) GetShowSeatType(showId models.ShowIdModel) (result []models.ShowSeatTypeModel, err error) {
 
 	result = make([]models.ShowSeatTypeModel, 0, 10)
 
@@ -32,7 +32,7 @@ func (repo *ShowSeatTypePersistance) GetShowSeatType(showId models.ShowIdModel) 
 }
 
 func InitShowSeatTypePersistance() IShowSeatTypePersistance {
-	return &ShowSeatTypePersistance{
+	return &showSeatTypePersistance{
 		showSeatTypes: []models.ShowSeatTypeModel{
 			{
 				Id:         models.ShowSeatTypeIdModel(1),

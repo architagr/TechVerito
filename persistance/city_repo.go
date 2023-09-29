@@ -10,12 +10,12 @@ type ICityPersistance interface {
 	GetCity(id models.CityIdModel) (models.CityModel, error)
 	GetCityByName(name string) (models.CityModel, error)
 }
-type CityPersistance struct {
+type cityPersistance struct {
 	cities []models.CityModel
 }
 
 func InitCityPersistance() ICityPersistance {
-	return &CityPersistance{
+	return &cityPersistance{
 		// #region this is inilization of database data if we have db connected then this will not be needed
 		cities: []models.CityModel{
 			{
@@ -27,10 +27,10 @@ func InitCityPersistance() ICityPersistance {
 	}
 }
 
-func (repo *CityPersistance) GetAllCities() []models.CityModel {
+func (repo *cityPersistance) GetAllCities() []models.CityModel {
 	return repo.cities
 }
-func (repo *CityPersistance) GetCity(id models.CityIdModel) (models.CityModel, error) {
+func (repo *cityPersistance) GetCity(id models.CityIdModel) (models.CityModel, error) {
 
 	for _, city := range repo.cities {
 		if city.Id == id {
@@ -42,7 +42,7 @@ func (repo *CityPersistance) GetCity(id models.CityIdModel) (models.CityModel, e
 	}
 }
 
-func (repo *CityPersistance) GetCityByName(name string) (models.CityModel, error) {
+func (repo *cityPersistance) GetCityByName(name string) (models.CityModel, error) {
 
 	for _, city := range repo.cities {
 		if city.Name == name {

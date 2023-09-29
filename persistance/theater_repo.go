@@ -5,19 +5,19 @@ import (
 	"movie_booking/models"
 )
 
-type ThearterPersistance struct {
-	theaters []models.TheaterModel
-}
-
 type IThearterPersistance interface {
 	GetAllTheaters() []models.TheaterModel
 	GetTheater(id models.TheaterIdModel) (models.TheaterModel, error)
 	GetTheaterByCity(id models.CityIdModel) ([]models.TheaterModel, error)
 }
 
+type thearterPersistance struct {
+	theaters []models.TheaterModel
+}
+
 func InitThearterPersistance() IThearterPersistance {
 
-	return &ThearterPersistance{
+	return &thearterPersistance{
 		// #region this is inilization of database data if we have db connected then this will not be needed
 		theaters: []models.TheaterModel{
 			{
@@ -35,10 +35,10 @@ func InitThearterPersistance() IThearterPersistance {
 	}
 }
 
-func (repo *ThearterPersistance) GetAllTheaters() []models.TheaterModel {
+func (repo *thearterPersistance) GetAllTheaters() []models.TheaterModel {
 	return repo.theaters
 }
-func (repo *ThearterPersistance) GetTheater(id models.TheaterIdModel) (models.TheaterModel, error) {
+func (repo *thearterPersistance) GetTheater(id models.TheaterIdModel) (models.TheaterModel, error) {
 
 	for _, theater := range repo.theaters {
 		if theater.Id == id {
@@ -49,7 +49,7 @@ func (repo *ThearterPersistance) GetTheater(id models.TheaterIdModel) (models.Th
 		Id: id,
 	}
 }
-func (repo *ThearterPersistance) GetTheaterByCity(id models.CityIdModel) ([]models.TheaterModel, error) {
+func (repo *thearterPersistance) GetTheaterByCity(id models.CityIdModel) ([]models.TheaterModel, error) {
 	result := make([]models.TheaterModel, 0, len(repo.theaters))
 
 	for _, theater := range repo.theaters {

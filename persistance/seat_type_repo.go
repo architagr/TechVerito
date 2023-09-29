@@ -10,14 +10,14 @@ type ISeatTypePersistance interface {
 	GetSeatType(id models.SeatTypeIdModel) (seatType models.SeatTypeModel, err error)
 }
 
-type SeatTypePersistance struct {
+type seatTypePersistance struct {
 	seatTypes []models.SeatTypeModel
 }
 
-func (repo *SeatTypePersistance) GetAll() []models.SeatTypeModel {
+func (repo *seatTypePersistance) GetAll() []models.SeatTypeModel {
 	return repo.seatTypes
 }
-func (repo *SeatTypePersistance) GetSeatType(id models.SeatTypeIdModel) (seatType models.SeatTypeModel, err error) {
+func (repo *seatTypePersistance) GetSeatType(id models.SeatTypeIdModel) (seatType models.SeatTypeModel, err error) {
 	for _, seatTypeData := range repo.seatTypes {
 		if seatTypeData.Id == id {
 			seatType = seatTypeData
@@ -32,7 +32,7 @@ func (repo *SeatTypePersistance) GetSeatType(id models.SeatTypeIdModel) (seatTyp
 }
 
 func InitSeatTypePersistance() ISeatTypePersistance {
-	return &SeatTypePersistance{
+	return &seatTypePersistance{
 		seatTypes: []models.SeatTypeModel{
 			{
 				Id:   models.SeatTypeIdModel(1),
