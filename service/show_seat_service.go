@@ -15,6 +15,7 @@ type SeatPriceDetails struct {
 type IShowSeatService interface {
 	GetAvailableSeats(showId models.ShowIdModel) ([][]models.SeatInfo, error)
 	CheckAvailability(showId models.ShowIdModel, seatName []string) ([]models.SeatInfo, error)
+	UpdateSeatStaus(showId models.ShowIdModel, seatId models.SeatIdModel, status enums.SeatStatusEnum) error
 }
 
 type showSeatService struct {
@@ -38,6 +39,11 @@ func InitShowSeatService(showRepo persistance.IShowPersistance,
 		seatRepo:         seatRepo,
 	}
 }
+
+func (svc *showSeatService) UpdateSeatStaus(showId models.ShowIdModel, seatId models.SeatIdModel, status enums.SeatStatusEnum) error {
+	return svc.showSeatRepo.UpdateShowSeatStatus(showId, seatId, status)
+}
+
 func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) ([][]models.SeatInfo, error) {
 
 	show, err := svc.showRepo.GetShow(showId)
@@ -73,7 +79,6 @@ func (svc *showSeatService) GetAvailableSeats(showId models.ShowIdModel) ([][]mo
 	}
 	seatStatusResponse := svc.getBlankLayout()
 	for _, seat := range audiSeats {
-
 		seatInfo := seatTypes[seat.SeatTypeId]
 		seatData := models.SeatInfo{
 			Name:         seat.Name,
@@ -101,10 +106,12 @@ func (svc *showSeatService) CheckAvailability(showId models.ShowIdModel, seatNam
 
 	for _, row := range availableSeats {
 		for _, seat := range row {
-			if seatNameMap[seat.Name] && seat.Status != enums.SEAT_STATUS_AVAILABLE {
-				errorSeat = append(errorSeat, seat.Name)
-			} else {
-				result = append(result, seat)
+			if _, ok := seatNameMap[seat.Name]; ok {
+				if seat.Status != enums.SEAT_STATUS_AVAILABLE {
+					errorSeat = append(errorSeat, seat.Name)
+				} else {
+					result = append(result, seat)
+				}
 			}
 		}
 	}
@@ -128,9 +135,18 @@ func (svc *showSeatService) getShowSeats(showId models.ShowIdModel) (map[models.
 	return showSeatStatus, nil
 }
 func (svc *showSeatService) getBlankLayout() [][]models.SeatInfo {
-	seatStatusResponse := make([][]models.SeatInfo, constants.SEAT_LAYOUT_MAX_SIZE)
-	for i := 0; i < constants.SEAT_LAYOUT_MAX_SIZE; i++ {
-		seatStatusResponse[i] = make([]models.SeatInfo, constants.SEAT_LAYOUT_MAX_SIZE)
+	seatStatusResponse := make([][]models.SeatInfo, constants.SEAT_LAYOUT_MAX_ROW_SIZE)
+	for i := 0; i < constants.SEAT_LAYOUT_MAX_ROW_SIZE; i++ {
+		seatStatusResponse[i] = make([]models.SeatInfo, constants.SEAT_LAYOUT_MAX_COL_SIZE)
+		for j := 0; j < constants.SEAT_LAYOUT_MAX_COL_SIZE; j++ {
+			seatStatusResponse[i][j] = models.SeatInfo{
+				Name:         "",
+				SeatTypeName: "",
+				SeatId:       models.SeatIdModel(0),
+				Rate:         0,
+				Status:       enums.SEAT_STATUS_NOT_AVAILABLE,
+			}
+		}
 	}
 	return seatStatusResponse
 }

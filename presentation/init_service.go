@@ -10,7 +10,7 @@ var showSeatService service.IShowSeatService
 var showService service.IShowService
 var ticketService service.ITicketService
 
-func InitAllServices() {
+func initAllServices() {
 	allTaxes := make([]service.ITaxService, 0, 3)
 	allTaxes = append(allTaxes, service.TaxFactory(enums.TAX_KRISHI_KALYAN), service.TaxFactory(enums.TAX_SERVICE), service.TaxFactory(enums.TAX_SWATCHH_BHARAT))
 	showSeatService = service.InitShowSeatService(showRepo, showSeatRepo, seatTypeRepo, showSeatTypeRepo, seatRepo)

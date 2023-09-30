@@ -1,12 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"movie_booking/enums"
+	"movie_booking/presentation"
 )
 
 func main() {
-	fmt.Println(enums.TICKET_STATUS_BOOKED)
-	fmt.Println(enums.TICKET_STATUS_CANCELLED)
+	presentation.Run()
 
 }

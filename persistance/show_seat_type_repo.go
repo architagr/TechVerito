@@ -38,7 +38,7 @@ func InitShowSeatTypePersistance() IShowSeatTypePersistance {
 				Id:         models.ShowSeatTypeIdModel(1),
 				ShowId:     models.ShowIdModel(1),
 				SeatTypeId: models.SeatTypeIdModel(1),
-				Rate:       240,
+				Rate:       320,
 			},
 			{
 				Id:         models.ShowSeatTypeIdModel(2),
@@ -50,13 +50,13 @@ func InitShowSeatTypePersistance() IShowSeatTypePersistance {
 				Id:         models.ShowSeatTypeIdModel(3),
 				ShowId:     models.ShowIdModel(1),
 				SeatTypeId: models.SeatTypeIdModel(3),
-				Rate:       320,
+				Rate:       240,
 			},
 			{
 				Id:         models.ShowSeatTypeIdModel(4),
 				ShowId:     models.ShowIdModel(2),
 				SeatTypeId: models.SeatTypeIdModel(1),
-				Rate:       240,
+				Rate:       320,
 			},
 			{
 				Id:         models.ShowSeatTypeIdModel(5),
@@ -68,13 +68,13 @@ func InitShowSeatTypePersistance() IShowSeatTypePersistance {
 				Id:         models.ShowSeatTypeIdModel(6),
 				ShowId:     models.ShowIdModel(2),
 				SeatTypeId: models.SeatTypeIdModel(3),
-				Rate:       320,
+				Rate:       240,
 			},
 			{
 				Id:         models.ShowSeatTypeIdModel(7),
 				ShowId:     models.ShowIdModel(3),
 				SeatTypeId: models.SeatTypeIdModel(1),
-				Rate:       240,
+				Rate:       320,
 			},
 			{
 				Id:         models.ShowSeatTypeIdModel(8),
@@ -86,7 +86,7 @@ func InitShowSeatTypePersistance() IShowSeatTypePersistance {
 				Id:         models.ShowSeatTypeIdModel(9),
 				ShowId:     models.ShowIdModel(3),
 				SeatTypeId: models.SeatTypeIdModel(3),
-				Rate:       320,
+				Rate:       240,
 			},
 		},
 	}

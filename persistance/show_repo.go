@@ -54,8 +54,8 @@ func InitShow() IShowPersistance {
 			{
 				Id:        models.ShowIdModel(1),
 				AudiId:    models.AudiIdModel(1),
-				StartTime: time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, nil),
-				EndTime:   time.Date(now.Year(), now.Month(), now.Day(), 3, 0, 0, 0, nil),
+				StartTime: time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()),
+				EndTime:   time.Date(now.Year(), now.Month(), now.Day(), 3, 0, 0, 0, now.Location()),
 				MovieId:   models.MovieIdModel(1),
 				Language:  enums.LANGUAGE_HINDI,
 				Features: []enums.AudiFeatureEnum{
@@ -65,8 +65,8 @@ func InitShow() IShowPersistance {
 			{
 				Id:        models.ShowIdModel(2),
 				AudiId:    models.AudiIdModel(1),
-				StartTime: time.Date(now.Year(), now.Month(), now.Day(), 3, 0, 0, 0, nil),
-				EndTime:   time.Date(now.Year(), now.Month(), now.Day(), 6, 0, 0, 0, nil),
+				StartTime: time.Date(now.Year(), now.Month(), now.Day(), 3, 0, 0, 0, now.Location()),
+				EndTime:   time.Date(now.Year(), now.Month(), now.Day(), 6, 0, 0, 0, now.Location()),
 				MovieId:   models.MovieIdModel(1),
 				Language:  enums.LANGUAGE_HINDI,
 				Features: []enums.AudiFeatureEnum{
@@ -76,8 +76,8 @@ func InitShow() IShowPersistance {
 			{
 				Id:        models.ShowIdModel(3),
 				AudiId:    models.AudiIdModel(1),
-				StartTime: time.Date(now.Year(), now.Month(), now.Day(), 6, 0, 0, 0, nil),
-				EndTime:   time.Date(now.Year(), now.Month(), now.Day(), 9, 0, 0, 0, nil),
+				StartTime: time.Date(now.Year(), now.Month(), now.Day(), 6, 0, 0, 0, now.Location()),
+				EndTime:   time.Date(now.Year(), now.Month(), now.Day(), 9, 0, 0, 0, now.Location()),
 				MovieId:   models.MovieIdModel(1),
 				Language:  enums.LANGUAGE_HINDI,
 				Features: []enums.AudiFeatureEnum{

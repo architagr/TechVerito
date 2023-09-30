@@ -33,10 +33,11 @@ func (repo *showSeatPersistance) GetShowSeat(showId models.ShowIdModel) (result 
 func (repo *showSeatPersistance) UpdateShowSeatStatus(showId models.ShowIdModel, seatId models.SeatIdModel, status enums.SeatStatusEnum) error {
 
 	seatFound := false
-	for _, showSeat := range repo.showSeats {
-		if showSeat.ShowId == showId && showSeat.SeatId == seatId {
-			showSeat.SeatStatus = status
+	for i := 0; i < len(repo.showSeats); i++ {
+		if repo.showSeats[i].ShowId == showId && repo.showSeats[i].SeatId == seatId {
+			repo.showSeats[i].SeatStatus = status
 			seatFound = true
+			break
 		}
 	}
 	if !seatFound {

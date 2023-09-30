@@ -35,6 +35,7 @@ func (ticketSvc *ticketService) BookTicket(showId models.ShowIdModel, seatName [
 	subTotal := float32(0)
 	for _, seat := range seatsInfo {
 		seatIds = append(seatIds, seat.SeatId)
+		ticketSvc.showSeatService.UpdateSeatStaus(showId, seat.SeatId, enums.SEAT_STATUS_BOOKED)
 		subTotal += seat.Rate
 	}
 	amount := models.AmountModel{
