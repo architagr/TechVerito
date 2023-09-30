@@ -3,6 +3,7 @@ package persistance
 import (
 	"movie_booking/errors"
 	"movie_booking/models"
+	"strings"
 )
 
 type ISeatPersistance interface {
@@ -33,7 +34,7 @@ func (repo *seatPersistance) GetSeats(audiId models.AudiIdModel) (seats []models
 func (repo *seatPersistance) GetSeatByName(audiId models.AudiIdModel, name string) (result models.SeatModel, err error) {
 
 	for _, seat := range repo.seats {
-		if seat.AudiId == audiId && seat.Name == name {
+		if seat.AudiId == audiId && strings.EqualFold(seat.Name, name) {
 			result = seat
 			break
 		}
